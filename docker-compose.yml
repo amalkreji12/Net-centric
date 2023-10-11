@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  app:
+    build: ./app
+    restart: always
+    environment:
+      - mongourl=mongodb://mongodb/mydb
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: examplepassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
