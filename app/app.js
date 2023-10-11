@@ -5,7 +5,13 @@ const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(require("express-session")({
+  secret: require("crypto").randomBytes(32).toString("hex"),
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(express.static('static'));
+
 
 // Connect to MongoDB (you need to have MongoDB running locally or specify your DB connection)
 mongoose.connect(process.env.MONOGOURL, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -19,7 +25,8 @@ const newsRouter = require('./routes/news');
 
 app.use('/api/auth', authRouter);
 app.use((req, res,next) => {
-  if (req.session.userId) {
+  console.log(req.url)
+  if (req.session && req.session.userId) {
    next()
   } else {
     res.json({ isAuthenticated: false });

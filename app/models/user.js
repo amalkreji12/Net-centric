@@ -1,15 +1,15 @@
 const mongoose = require('mongoose');
 
-const newsSchema = new mongoose.Schema({
-  title: {
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  password: {
     type: String,
     required: true,
   },
-  content: {
-    type: String,
-    required: true,
-  },
-  // You can add more fields like author, publication date, etc. as needed
 });
 
-module.exports = mongoose.model('News', newsSchema);
+module.exports = mongoose.model('User', userSchema);

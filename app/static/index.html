@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newspaper Website</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="script.js"></script>
+    <script>
+        String.prototype.format = function() {
+        const args = arguments;
+        return this.replace(/{(\d+)}/g, function(match, number) {
+            return typeof args[number] !== 'undefined' ? args[number] : match;
+            });
+        };
+
+
+
+    </script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -31,7 +43,10 @@
                     <a class="nav-link" href="#">Entertainment</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Technology</a>
+                    <a class="nav-link" href="/addnews.html">addnews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login.html">Login/Register</a>
                 </li>
             </ul>
             <form class="form-inline ml-auto">
@@ -46,28 +61,40 @@
         <div class="row">
             <div class="col-md-8">
                 <h1>Latest News</h1>
-                <div class="card mb-4">
-                    <img src="news1.jpg" class="card-img-top" alt="News Image">
-                    <div class="card-body">
-                        <h5 class="card-title">News Headline 1</h5>
-                        <p class="card-text">This is a short description of the news article. It provides a brief overview of the content.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <img src="news2.jpg" class="card-img-top" alt="News Image">
-                    <div class="card-body">
-                        <h5 class="card-title">News Headline 2</h5>
-                        <p class="card-text">This is another news article with a brief description. You can click "Read More" to learn more.</p>
-                        <a href="#" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
+                <p id="login"> Login to see the message</p>
+               
+                
             </div>
             <div class="col-md-4">
                 <!-- Sidebar or Additional Content -->
             </div>
         </div>
     </div>
+    <script>
+        const template = `<div class="card mb-4">
+                    <img src="news2.jpg" class="card-img-top" alt="News Image">
+                    <div class="card-body">
+                        <h5 class="card-title">{0}</h5>
+                        <p class="card-text">{1}</p>
+                        <a href="{2}" class="btn btn-primary">Read More</a>
+                    </div>
+                </div>
+                `;
+         (async() => {
+    
+            const all_news = await fetchNews();
+            if(all_news.sucess){
+                document.getElementById('login').style.display='none'
+                let elem = document.querySelector('body > div > div > div.col-md-8');
+                news = all_news.news.map((e) => template.format(e.title,e.content.split('.')[0])).join('')
+                elem.innerHTML += news
+
+            }
+            
+            
+         })()       
+        
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
