@@ -5,18 +5,20 @@ services:
     build: ./app
     restart: always
     environment:
-      - mongourl=mongodb://mongodb/mydb
+      - MONOGOURL=mongodb://root:root_password@mongodb:27017/mydb
+    ports:
+      - "3000:3000"
   mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    restart: always
+    image: mongo:latest  # Use the latest MongoDB Docker image
+    container_name: mongodb_container
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: examplepassword
+      MONGO_INITDB_ROOT_PASSWORD: root_password
+      MONGO_INITDB_DATABASE: mydatabase
     ports:
-      - "27017:27017"
+      - "27017:27017"  # Map the container port to the host
     volumes:
-      - mongodb_data:/data/db
-
+      - mongodb_data:/data/db  # Map a host directory to store MongoDB data
+    restart: unless-stopped
 volumes:
   mongodb_data:

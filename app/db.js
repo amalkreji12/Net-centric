@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const News = require('./models/news'); // Import your News model
 
 // Connect to your MongoDB database (replace 'your_database_name' with your actual database name)
-mongoose.connect('mongodb://localhost/your_database_name', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONOGOURL, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 // Define sample news data

@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../models/user');
 
 // Route for user registration
 router.post('/register', async (req, res) => {
@@ -28,10 +27,10 @@ router.post('/register', async (req, res) => {
 
     await newUser.save();
 
-    res.status(201).json({ message: 'User registered successfully' });
+    return res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
     console.error('Error registering user:', error);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -55,13 +54,13 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid username or password' });
     }
 
-    // Generate a JSON Web Token (JWT) for authentication
-    const token = jwt.sign({ userId: user._id }, 'NDdj98Bhd2hdUHbD2WSN', { expiresIn: '1h' });
+    req.session.userId = user._id;
+    req.session.username = user.username;
 
-    res.json({ token });
+    return res.json({ sucess : true });
   } catch (error) {
     console.error('Error logging in:', error);
-    res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({ message: 'Server error' });
   }
 });
 
