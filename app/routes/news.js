@@ -13,6 +13,20 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+router.get('/search/:query', async (req, res) => {
+  const searchQuery = req.params.query;
+
+  try {
+    const results = await News.find({ tags: { $in: searchQuery.split(',') } });
+
+    res.json(results);
+  } catch (error) {
+    console.error('Error searching news:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 // Fetch a specific news article by ID
 router.get('/:id', async (req, res) => {
   try {
@@ -23,7 +37,7 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'News article not found' });
     }
 
-    res.json(newsArticle);
+    return res.json({sucess : true, news :newsArticle });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

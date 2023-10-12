@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detailed News</title>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .tag {
@@ -19,7 +20,7 @@
 <body>
     <!-- Navigation Bar (You can reuse the previous navigation bar) -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Newspaper</a>
+        <a class="navbar-brand" href="/">Newspaper</a>
         <!-- ... (Navigation bar code from the previous example) ... -->
     </nav>
 
@@ -27,14 +28,40 @@
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8">
-                <h1>News Headline</h1>
-                <p class="text-muted">Published on <span id="date">September 19, 2023</span> by <span id="author">John Doe</span></p>
+                <h1>Title</h1>
+                <p class="text-muted">Published on <span id="date"></span> by <span id="author">John Doe</span></p>
                 <p class="text-muted">Tags: 
-                    <span class="tag">Politics</span>
-                    <span class="tag" style="background-color: #28a745;">Economy</span>
-                    <span class="tag" style="background-color: #dc3545;">World Affairs</span>
-                </p>
+                 </p>
                 <hr>
                 <p>
-                    This is the detailed news article. It provides in-depth information about the topic, including background, context, and analysis. You can read the full news article here and gain a comprehensive understanding
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+    <script>
+         (async() => {
+    
+    const news = await fetchNewsById(location.hash.slice(1));
+    if(news.sucess){
+        // document.getElementById('login').style.display='none'
+         document.querySelector('body > div > div > div > h1').innerText = news.news.title ;
+         document.querySelector('body > div > div > div > p:nth-child(3)').innerHTML = news.news.tags.split(',').map((e) => `<span class="tag">${e}</span>`).join(''); 
+        
+         document.querySelector('#date').innerText = news.news.date ;
+
+         document.querySelector('body > div > div > div > p:nth-child(5)').innerText = news.news.content ;
+
+
+
+    }else{
+        document.querySelector('body > div > div > div > h1').innerText = "news not found" ;
+        
+    }
+    
+    
+ })()
+    </script>
+</body>
+</html>
 

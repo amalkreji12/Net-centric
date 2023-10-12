@@ -29,10 +29,15 @@ app.use((req, res,next) => {
   if (req.session && req.session.userId) {
    next()
   } else {
-    res.json({ isAuthenticated: false });
+    return res.json({ isAuthenticated: false });
   }
 });
 app.use('/api/news', newsRouter);
+
+app.get('/logout', (req, res) => {
+  req.session = {};
+  return res.redirect('/');
+})
 
 // Start the server
 const port = process.env.PORT || 3000;

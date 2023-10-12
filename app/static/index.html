@@ -33,25 +33,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Politics</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Business</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sports</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Entertainment</a>
-                </li>
+                
+     
                 <li class="nav-item">
                     <a class="nav-link" href="/addnews.html">addnews</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/login.html">Login/Register</a>
+                
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
             <form class="form-inline ml-auto">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">Search</button>
             </form>
         </div>
     </nav>
@@ -86,7 +83,7 @@
             if(all_news.sucess){
                 document.getElementById('login').style.display='none'
                 let elem = document.querySelector('body > div > div > div.col-md-8');
-                news = all_news.news.map((e) => template.format(e.title,e.content.split('.')[0])).join('')
+                news = all_news.news.map((e) => template.format(e.title,e.content.split('.')[0] , '/details.html#'+e._id)).join('')
                 elem.innerHTML += news
 
             }

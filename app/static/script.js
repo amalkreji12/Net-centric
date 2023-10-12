@@ -83,10 +83,11 @@ async function fetchNews() {
         body: JSON.stringify({title: title,content: content, tags: tags}),
       });
       const data = await response.json();
-      console.log('New News Article added:', data);
+      document.getElementById("message").textContent = 'New News Article added:'
+      window.location = '/index.html';
       return data
     } catch (error) {
-      console.error('Error adding news:', error);
+      document.getElementById("message").textContent = 'Error adding news:'
     }
   }
   
